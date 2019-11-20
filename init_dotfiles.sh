@@ -15,3 +15,12 @@ ln kitty/kitty.conf ~/.config/kitty/kitty.conf
 rm ~/.tmux.conf
 ln tmux/.tmux.conf  ~/.tmux.conf
 
+# setup vscode
+rm ~/.config/Code/User/settings.json ~/.config/Code/User/keybindings.json
+mkdir ~/.config/Code/User/
+ln vscode/settings.json ~/.config/Code/User/settings.json
+ln vscode/keybindings.json ~/.config/Code/User/keybindings.json
+
+# setup ideavimrc
+rm ~/.ideavimrc
+ln ideavimrc/.ideavimrc ~/.ideavimrc

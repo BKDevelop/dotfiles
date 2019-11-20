@@ -137,3 +137,8 @@ command Clean execute "%bd | e#"
 " Costum movement
 imap jj <ESC>
 map <leader>w <C-w>
+
+" more convinient scrolling
+nmap <M-j> 15gj
+nmap <M-k> 15gk
+
