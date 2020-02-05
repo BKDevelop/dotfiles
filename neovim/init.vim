@@ -12,8 +12,7 @@ let mapleader = "\<space>"
 call plug#begin('~/.config/nvim/plugged')
 
 " Color Theme
-Plug 'blueshirts/darcula'
-Plug 'lifepillar/vim-solarized8'
+Plug 'morhetz/gruvbox'
 
 " Utils
 Plug 'tpope/vim-surround'
@@ -128,8 +127,7 @@ map <leader>l :set list!<CR> " Toggle tabs and EOL
 
 " Color Scheme
 set termguicolors
-set background=light
-colorscheme solarized8
+colorscheme gruvbox
 
 " Costum commands
 command Clean execute "%bd | e#"
