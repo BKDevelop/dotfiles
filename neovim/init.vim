@@ -18,7 +18,7 @@ Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-commentary'
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
 Plug 'mattn/emmet-vim'
 
 " Language Support
@@ -36,6 +36,7 @@ Plug 'zchee/deoplete-jedi', { 'for': 'py' }
 Plug 'carlitux/deoplete-ternjs', { 'for': 'js' }
 Plug 'mhartington/deoplete-typescript', { 'for': 'ts' }
 Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rs' }
+Plug 'zchee/deoplete-clang'
 
 call plug#end()
 
@@ -139,4 +140,7 @@ map <leader>w <C-w>
 " more convinient scrolling
 nmap <M-j> 15gj
 nmap <M-k> 15gk
+
+" shortcut for fuzzy search
+nmap <leader>ff :FZF<CR>
 

@@ -1,45 +1,38 @@
 #!/bin/bash
 
+scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 # function names
 setup_neovim()
 {
 rm -fr ~/.config/nvim/
 mkdir ~/.config/nvim/
-cp -r neovim/autoload/ ~/.config/nvim/
-ln neovim/init.vim ~/.config/nvim/init.vim
-}
-
-setup_kitty()
-{
-rm -fr ~/.config/kitty/
-mkdir ~/.config/kitty/
-ln kitty/kitty.conf ~/.config/kitty/kitty.conf
+cp -r $scriptDir/neovim/autoload/ ~/.config/nvim/
+ln -s $scriptDir/neovim/init.vim ~/.config/nvim/init.vim
 }
 
 setup_tmux()
 {
 rm ~/.tmux.conf
-ln tmux/.tmux.conf  ~/.tmux.conf
+ln -s $scriptDir/tmux/.tmux.conf  ~/.tmux.conf
 }
 
 setup_vscode()
 {
 rm ~/.config/Code/User/settings.json ~/.config/Code/User/keybindings.json
 mkdir ~/.config/Code/User/
-ln vscode/settings.json ~/.config/Code/User/settings.json
-ln vscode/keybindings.json ~/.config/Code/User/keybindings.json
+ln -s $scriptDir/vscode/settings.json ~/.config/Code/User/settings.json
+ln -s $scriptDir/vscode/keybindings.json ~/.config/Code/User/keybindings.json
 }
 
 setup_ideavimrc()
 {
 rm ~/.ideavimrc
-ln ideavimrc/.ideavimrc ~/.ideavimrc
+ln -s $scriptDir/ideavimrc/.ideavimrc ~/.ideavimrc
 }
 
 setup_all()
 {
     setup_neovim
-    setup_kitty
     setup_tmux
     setup_vscode
     setup_ideavimrc
@@ -49,7 +42,6 @@ list_options()
 {
     echo "all"
     echo "neovim"
-    echo "kitty"
     echo "tmux"
     echo "vscode"
     echo "ideavimrc"
@@ -74,8 +66,6 @@ elif [ "$1" == "all" ]; then
      setup_all
 elif [ "$1" == "neovim" ]; then
     setup_neovim
-elif [ "$1" == "kitty" ]; then
-    setup_kitty
 elif [ "$1" == "tmux" ]; then
     setup_tmux
 elif [ "$1" == "vscode" ]; then
