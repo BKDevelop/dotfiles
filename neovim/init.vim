@@ -144,3 +144,9 @@ nmap <M-k> 15gk
 " shortcut for fuzzy search
 nmap <leader>ff :FZF<CR>
 
+" enable completion with deoplete
+" python3 and pynvim must be installed!
+" :echo has('python3') -> 1
+" pip3 install --user pynvim
+" pip3 install msgpack
+let g:deoplete#enable_at_startup = 1 
