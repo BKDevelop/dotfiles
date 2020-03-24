@@ -36,7 +36,6 @@ Plug 'zchee/deoplete-jedi', { 'for': 'py' }
 Plug 'carlitux/deoplete-ternjs', { 'for': 'js' }
 Plug 'mhartington/deoplete-typescript', { 'for': 'ts' }
 Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rs' }
-Plug 'zchee/deoplete-clang'
 
 call plug#end()
 
@@ -150,3 +149,9 @@ nmap <leader>ff :FZF<CR>
 " pip3 install --user pynvim
 " pip3 install msgpack
 let g:deoplete#enable_at_startup = 1 
+
+" deoplete clang properties
+" [sudo] find / -name libclang.so or libclang.o.1
+let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-9/lib/libclang.so.1'
+
+let g:deoplete#sources#clang#clang_header='/usr/bin/clang'
