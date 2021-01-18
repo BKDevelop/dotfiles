@@ -1,10 +1,13 @@
+" Turn on syntax highlighting
+syntax on
+
+" For plugins to load correctly
+filetype plugin indent on
+set noswapfile
+set nobackup
+
 
 let g:python3_host_prog='C:/Python39/python.exe'
-" Don't try to be vi compatible
-set nocompatible
-
-" Helps force plugins to load correctly when it is turned back on below
-filetype off
 
 " Pick a leader key
 let mapleader = "\<space>"
@@ -13,7 +16,7 @@ let mapleader = "\<space>"
 call plug#begin('~\AppData\Local\nvim\plugged')
 
 " Color Theme
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 
 " Utils
 Plug 'tpope/vim-surround'
@@ -21,33 +24,26 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf'
 Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+
 
 " Language Support
-Plug 'dzeban/vim-log-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'rust-lang/rust.vim'
+Plug 'sheerun/vim-polyglot' 
 
 " Syntax check and auto-completion
 Plug 'w0rp/ale' " linting
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
+
 call plug#end()
 
 " Plugin specific key mappings:
 "   netrw settings
-nnoremap <leader>ft :Lexplore<CR>
-let g:netrw_banner=0
-let g:netrw_winsize=20
-let g:netrw_liststyle=3
-let g:netrw_localrmdir='rm -r'
-
-" Turn on syntax highlighting
-syntax on
-
-" For plugins to load correctly
-filetype plugin indent on
+nnoremap <leader>ft :NERDTreeToggle<CR>
 
 " Security
 set modelines=0
@@ -88,13 +84,10 @@ set hidden
 " Rendering
 set ttyfast
 
-" Status bar
-set laststatus=2
-set statusline=%=%m\ %c\ %P\ %f
-
 " Last line
-set showmode
-set showcmd
+" airline will take care of showing mode :)
+set noshowmode
+set noshowcmd
 
 " Searching
 nnoremap / /\v
@@ -138,6 +131,10 @@ nmap <M-k> 15gk
 
 " shortcut for fuzzy search
 nmap <leader>ff :FZF<CR>
+
+" open dotfile
+nmap <leader>fed :tabe ~\AppData\Local\nvim\init.vim<CR>
+nmap <leader>feg :tabe ~\AppData\Local\nvim\ginit.vim<CR>
 
 " enable completion with deoplete
 " python3 and pynvim must be installed!
