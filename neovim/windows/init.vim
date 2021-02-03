@@ -6,8 +6,10 @@ filetype plugin indent on
 set noswapfile
 set nobackup
 
+language en_US
 
-let g:python3_host_prog='C:/Python39/python.exe'
+
+let g:python3_host_prog='c:\python\python.exe'
 
 " Pick a leader key
 let mapleader = "\<space>"
@@ -27,8 +29,8 @@ Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree'
-Plug 'vim-airline/vim-airline'
-
+Plug 'itchyny/lightline.vim'
+Plug 'raimondi/delimitmate'
 
 " Language Support
 Plug 'sheerun/vim-polyglot' 
@@ -42,7 +44,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
 " Plugin specific key mappings:
-"   netrw settings
+" NERDTree 
 nnoremap <leader>ft :NERDTreeToggle<CR>
 
 " Security
@@ -53,7 +55,7 @@ set number
 set relativenumber
 
 " Show file stats
-set ruler
+"set ruler
 
 " Blink cursor on error instead of beeping (grr)
 set visualbell
@@ -117,6 +119,9 @@ map <leader>l :set list!<CR> " Toggle tabs and EOL
 " Color Scheme
 set termguicolors
 colorscheme gruvbox
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }
 
 " Costum commands
 command Clean execute "%bd | e#"
@@ -131,6 +136,9 @@ nmap <M-k> 15gk
 
 " shortcut for fuzzy search
 nmap <leader>ff :FZF<CR>
+
+" change vim working directory to current file
+nnoremap <leader>cd :lcd %:p:h<CR>
 
 " open dotfile
 nmap <leader>fed :tabe ~\AppData\Local\nvim\init.vim<CR>

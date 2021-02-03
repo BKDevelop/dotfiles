@@ -1,2 +1,3 @@
-set guifont=Jetbrains\ Mono:h14
-"FVimFontLigature v:true
+set guifont=Jetbrains\ Mono:h12
+GuiPopupmenu 0
+
