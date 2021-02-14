@@ -1,9 +1,10 @@
+" Turn on syntax highlighting
+syntax on
 
-" Don't try to be vi compatible
-set nocompatible
-
-" Helps force plugins to load correctly when it is turned back on below
-filetype off
+" For plugins to load correctly
+filetype plugin indent on
+set noswapfile
+set nobackup
 
 " Pick a leader key
 let mapleader = "\<space>"
@@ -12,7 +13,7 @@ let mapleader = "\<space>"
 call plug#begin('~/.config/nvim/plugged')
 
 " Color Theme
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 
 " Utils
 Plug 'tpope/vim-surround'
@@ -20,38 +21,27 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf'
 Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree'
+Plug 'itchyny/lightline.vim'
+Plug 'raimondi/delimitmate'
 
 " Language Support
-Plug 'dzeban/vim-log-syntax'
-Plug 'jceb/vim-orgmode'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'rust-lang/rust.vim'
+Plug 'sheerun/vim-polyglot' 
 
 " Syntax check and auto-completion
 Plug 'w0rp/ale' " linting
 Plug 'scrooloose/syntastic'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi', { 'for': 'py' }
-Plug 'carlitux/deoplete-ternjs', { 'for': 'js' }
-Plug 'mhartington/deoplete-typescript', { 'for': 'ts' }
-Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rs' }
+Plug 'neoclide/coc.nvim'
+
 
 call plug#end()
 
 " Plugin specific key mappings:
 "   netrw settings
-nnoremap <leader>ft :Lexplore<CR>
-let g:netrw_banner=0
-let g:netrw_winsize=20
-let g:netrw_liststyle=3
-let g:netrw_localrmdir='rm -r'
+nnoremap <leader>ft :NERDTreeToggle<CR>
 
-" Turn on syntax highlighting
-syntax on
-
-" For plugins to load correctly
-filetype plugin indent on
 
 " Security
 set modelines=0
@@ -59,9 +49,6 @@ set modelines=0
 " Show line hybrid numbers
 set number
 set relativenumber
-
-" Show file stats
-set ruler
 
 " Blink cursor on error instead of beeping (grr)
 set visualbell
@@ -97,8 +84,8 @@ set laststatus=2
 set statusline=%=%m\ %c\ %P\ %f
 
 " Last line
-set showmode
-set showcmd
+set noshowmode
+set noshowcmd
 
 " Searching
 nnoremap / /\v
@@ -126,14 +113,19 @@ set listchars=tab:▸\ ,eol:¬
 map <leader>l :set list!<CR> " Toggle tabs and EOL
 
 " Color Scheme
-set termguicolors
+" set termguicolors <- For some reason breaks colors in rxvt ?!
+set t_Co=256
 colorscheme gruvbox
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }
+
 
 " Costum commands
 command Clean execute "%bd | e#"
 
 " Costum movement
-imap jj <ESC>
+imap jk <ESC>
 map <leader>w <C-w>
 
 " more convinient scrolling
@@ -142,6 +134,13 @@ nmap <M-k> 15gk
 
 " shortcut for fuzzy search
 nmap <leader>ff :FZF<CR>
+
+" change vim working directory to current file
+nnoremap <leader>cd :lcd %:p:h<CR>
+
+
+" open dotfile
+nmap <leader>fed :tabe ~/dotfiles/neovim/init.vim<CR>
 
 " enable completion with deoplete
 " python3 and pynvim must be installed!

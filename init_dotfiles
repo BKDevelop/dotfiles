@@ -1,10 +1,14 @@
 #!/bin/bash
 
+set -e
+
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 # function names
 setup_neovim()
 {
-rm -fr ~/.config/nvim/
+if [[ -d ~/.config/nvim ]]; then
+  rm -fr ~/.config/nvim/
+fi
 mkdir ~/.config/nvim/
 cp -r $scriptDir/neovim/autoload/ ~/.config/nvim/
 ln -s $scriptDir/neovim/init.vim ~/.config/nvim/init.vim
