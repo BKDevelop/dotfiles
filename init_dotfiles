@@ -9,7 +9,12 @@ setup_neovim()
 if [[ -d ~/.config/nvim ]]; then
   rm -fr ~/.config/nvim/
 fi
+if [[ -d ~/.nvim/ ]]; then
+    rm -fr ~/.nvim/
+fi
+
 mkdir ~/.config/nvim/
+mkdir ~/.nvim/undodir -p
 cp -r $scriptDir/neovim/autoload/ ~/.config/nvim/
 ln -s $scriptDir/neovim/init.vim ~/.config/nvim/init.vim
 }

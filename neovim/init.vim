@@ -5,6 +5,8 @@ syntax on
 filetype plugin indent on
 set noswapfile
 set nobackup
+set undodir=~/.nvim/undodir
+set undofile
 
 " Pick a leader key
 let mapleader = "\<space>"
@@ -23,9 +25,8 @@ Plug 'junegunn/fzf'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/nerdtree'
-Plug 'itchyny/lightline.vim'
 Plug 'raimondi/delimitmate'
+Plug 'mbbill/undotree'
 
 " Language Support
 Plug 'sheerun/vim-polyglot' 
@@ -40,9 +41,14 @@ call plug#end()
 
 " Plugin specific key mappings:
 "   netrw settings
-nnoremap <leader>ft :NERDTreeToggle<CR>
+nnoremap <leader>ft :Lexplore<CR>
+let g:netrw_banner=0
+let g:netrw_winsize=25
+let g:netrw_liststyle=3
+let g:netrw_localrmdir='rm -r'
 
-
+" Undotree
+nnoremap <leader>u :UndotreeShow<CR>
 " Security
 set modelines=0
 
@@ -116,9 +122,11 @@ map <leader>l :set list!<CR> " Toggle tabs and EOL
 " set termguicolors <- For some reason breaks colors in rxvt ?!
 set t_Co=256
 colorscheme gruvbox
-let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ }
+let g:airline_theme='minimalist'
+let g:airline_powerline_fonts=1
+" let g:lightline = {
+"       \ 'colorscheme': 'seoul256',
+"       \ }
 
 
 " Costum commands
@@ -141,16 +149,30 @@ nnoremap <leader>cd :lcd %:p:h<CR>
 
 " open dotfile
 nmap <leader>fed :tabe ~/dotfiles/neovim/init.vim<CR>
+nmap <leader>fn :tabe ~/dev/notes.md<CR>
 
-" enable completion with deoplete
-" python3 and pynvim must be installed!
-" :echo has('python3') -> 1
-" pip3 install --user pynvim
-" pip3 install msgpack
-let g:deoplete#enable_at_startup = 1 
+" Statusline
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
 
-" deoplete clang properties
-" [sudo] find / -name libclang.so or libclang.o.1
-let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-9/lib/libclang.so.1'
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
 
-let g:deoplete#sources#clang#clang_header='/usr/bin/clang'
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%{StatuslineGit()}
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m\
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
+
