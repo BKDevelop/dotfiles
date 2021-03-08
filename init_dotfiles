@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
@@ -33,6 +32,27 @@ ln -s $scriptDir/vscode/settings.json ~/.config/Code/User/settings.json
 ln -s $scriptDir/vscode/keybindings.json ~/.config/Code/User/keybindings.json
 }
 
+setup_aliases()
+{
+if [[ -f ~/.aliases ]]; then
+  rm ~/.aliases
+fi
+ln -s $scriptDir/aliases/aliases ~/.aliases
+if [[ -f ~/.bashrc ]]; then
+    echo "" >> ~/.bashrc
+    echo "# add my aliases" >> ~/.bashrc
+    echo "if [[ -f ~/.aliases ]]; then" >> ~/.bashrc
+    echo "    . ~/.aliases" >> ~/.bashrc
+    echo "fi"  >> ~/.bashrc
+fi
+
+if [[ -f ~/.zshrc ]]; then
+    echo "" >> ~/.zshrc
+    echo "# add my aliases" >> ~/.zshrc
+    echo "source $HOME/.aliases" >> ~/.zshrc
+fi
+}
+
 setup_ideavimrc()
 {
 rm ~/.ideavimrc
@@ -41,10 +61,7 @@ ln -s $scriptDir/ideavimrc/.ideavimrc ~/.ideavimrc
 
 setup_all()
 {
-    setup_neovim
-    setup_tmux
-    setup_vscode
-    setup_ideavimrc
+    echo "Not available"
 }
 
 list_options()
@@ -84,3 +101,7 @@ elif [ "$1" == "ideavimrc" ]; then
 else
     _help
 fi
+
+
+# If using i3wm with virtualbox: add this to .xinitrc
+# /usr/bin/VBoxClient-all

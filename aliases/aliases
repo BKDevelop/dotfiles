@@ -1,0 +1,5 @@
+alias vim="nvim"
+alias vi="nvim"
+alias vf="nvim \$(fzf)"
+alias vd="nvim -d"
+alias vimdiff="nvim -d"
