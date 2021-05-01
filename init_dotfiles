@@ -12,7 +12,7 @@ if [[ -d ~/.nvim/ ]]; then
     rm -fr ~/.nvim/
 fi
 
-mkdir ~/.config/nvim/
+mkdir ~/.config/nvim/ -p
 mkdir ~/.nvim/undodir -p
 cp -r $scriptDir/neovim/autoload/ ~/.config/nvim/
 ln -s $scriptDir/neovim/init.vim ~/.config/nvim/init.vim
@@ -20,14 +20,16 @@ ln -s $scriptDir/neovim/init.vim ~/.config/nvim/init.vim
 
 setup_tmux()
 {
-rm ~/.tmux.conf
+if [[ -f ~/.tmux.conf ]]; then
+	rm ~/.tmux.conf
+fi
 ln -s $scriptDir/tmux/.tmux.conf  ~/.tmux.conf
 }
 
 setup_vscode()
 {
 rm ~/.config/Code/User/settings.json ~/.config/Code/User/keybindings.json
-mkdir ~/.config/Code/User/
+mkdir ~/.config/Code/User/ 
 ln -s $scriptDir/vscode/settings.json ~/.config/Code/User/settings.json
 ln -s $scriptDir/vscode/keybindings.json ~/.config/Code/User/keybindings.json
 }
@@ -53,6 +55,16 @@ if [[ -f ~/.zshrc ]]; then
 fi
 }
 
+setup_npm()
+{
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+if [[ -f ~/.profile ]]; then
+    echo "" >> ~/.profile
+    echo "# add npm prefix" >> ~/.profile
+    echo "\"export PATH=~/.npm-global/bin:\$PATH\"" >> ~/.profile
+fi
+}
 setup_ideavimrc()
 {
 rm ~/.ideavimrc
@@ -67,7 +79,7 @@ setup_all()
 list_options()
 {
     echo "all"
-    echo "neovim"
+    echo "aliases"
     echo "tmux"
     echo "vscode"
     echo "ideavimrc"
@@ -86,22 +98,26 @@ _help()
 # main body
 
 
-if [ "$1" == "list" ]; then
+for var in "$@"
+do
+if [ "$var" == "list" ]; then
     list_options
-elif [ "$1" == "all" ]; then
+elif [ "$var" == "all" ]; then
      setup_all
-elif [ "$1" == "neovim" ]; then
-    setup_neovim
-elif [ "$1" == "tmux" ]; then
+elif [ "$var" == "aliases" ]; then
+    setup_aliases
+elif [ "$var" == "tmux" ]; then
     setup_tmux
-elif [ "$1" == "vscode" ]; then
+elif [ "$var" == "npm" ]; then
+    setup_npm
+elif [ "$var" == "vscode" ]; then
     setup_vscode
-elif [ "$1" == "ideavimrc" ]; then
+elif [ "$var" == "ideavimrc" ]; then
     setup_ideavimrc
 else
     _help
 fi
-
+done
 
 # If using i3wm with virtualbox: add this to .xinitrc
 # /usr/bin/VBoxClient-all
