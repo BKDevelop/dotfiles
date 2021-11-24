@@ -8,7 +8,6 @@ set nobackup
 
 language en_US
 
-
 let g:python3_host_prog='c:\python\python.exe'
 
 " Pick a leader key
@@ -28,9 +27,10 @@ Plug 'junegunn/fzf'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'raimondi/delimitmate'
+Plug 'vimwiki/vimwiki'
 
 " Language Support
 Plug 'sheerun/vim-polyglot' 
@@ -38,14 +38,19 @@ Plug 'sheerun/vim-polyglot'
 " Syntax check and auto-completion
 Plug 'w0rp/ale' " linting
 Plug 'scrooloose/syntastic'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 
 call plug#end()
 
 " Plugin specific key mappings:
-" NERDTree 
-nnoremap <leader>ft :NERDTreeToggle<CR>
+" netrw settings
+nnoremap <leader>ft :Lexplore<CR>
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
 
 " Security
 set modelines=0
@@ -139,6 +144,10 @@ nmap <leader>ff :FZF<CR>
 
 " change vim working directory to current file
 nnoremap <leader>cd :lcd %:p:h<CR>
+
+" remap vimwiki because it collides with my movement settings
+nmap <leader>wc <Plug>Vimwiki2HTML
+nmap <Leader>wcc <Plug>Vimwiki2HTMLBrowse
 
 " open dotfile
 nmap <leader>fed :tabe ~\AppData\Local\nvim\init.vim<CR>
