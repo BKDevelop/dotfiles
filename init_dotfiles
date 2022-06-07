@@ -6,10 +6,10 @@ scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 setup_neovim()
 {
 if [[ -d ~/.config/nvim ]]; then
-  rm -fr ~/.config/nvim/
+  rm -r ~/.config/nvim/
 fi
 if [[ -d ~/.nvim/ ]]; then
-    rm -fr ~/.nvim/
+    rm -r ~/.nvim/
 fi
 
 mkdir ~/.config/nvim/ -p
@@ -110,6 +110,8 @@ elif [ "$var" == "tmux" ]; then
     setup_tmux
 elif [ "$var" == "npm" ]; then
     setup_npm
+elif [ "$var" == "neovim" ]; then
+    setup_neovim
 elif [ "$var" == "vscode" ]; then
     setup_vscode
 elif [ "$var" == "ideavimrc" ]; then
