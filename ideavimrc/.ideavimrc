@@ -7,6 +7,10 @@ set incsearch
 set ignorecase
 set smartcase
 set showmatch
+set ideajoin
+set NERDTree
+set multiple-cursors
+idearefactormode=keep
 
 " Integrate with system clipboard
 set clipboard=unnamedplus,unnamed
@@ -25,15 +29,29 @@ nmap <leader>wj <c-w>j
 nmap <leader>wq :wq<cr>
 
 nmap gd :action GotoDeclaration<cr>
-nmap <leader>b :action Back<cr>
-nmap <leader>f :action Forward<cr>
 
+nmap <leader>e :action NERDTreeToggle<cr>
 nmap <leader>f :action GotoFile<cr>
-nmap <leader>c :action GotoClass<cr>
+nmap <leader>st :action FindInPath<cr>
 nmap <leader>ns :action GotoSymbol<cr>
 nmap <leader>nm :action FileStructurePopup<cr>
 nmap <leader>d :action ShowErrorDescription<cr>
+nmap <leader>o :action FileStructurePopup<cr>
+nmap <leader>lpd :action QuickImplementations<cr>
+nmap <leader>h :noh<cr>
+
 nmap == :action ReformatCode<cr>
+" Debugger
+nmap <leader>dt :action ToggleLineBreakpoint<cr>
+nmap <leader>dc :action Resume<cr>
+nmap <leader>dC :action RunToCursor<cr>
+nmap <leader>do :action StepOver<cr>
+nmap <leader>di :action StepInto<cr>
+nmap <leader>du :action StepOut<cr>
+nmap <leader>du :action StepOut<cr>
+nmap <leader>dg :action ChooseRunConfiguration<CR>
+
+nmap <leader>Lr :action IdeaVim.ReloadVimRc.reload<CR>
 
 nmap <m-j> 15gj
 nmap <m-k> 15gk
@@ -41,6 +59,7 @@ nmap <m-k> 15gk
 " Search defaults
 nnoremap / /\v
 vnoremap / /\v
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " Quickly get out of insert mode
 imap jk <ESC>
@@ -48,3 +67,17 @@ imap jk <ESC>
 " Won't work in visual mode (with vmap) for some reason.
 " Use default map of <c-/> for that.
 "nmap gcc :action CommentByLineComment<cr>
+
+" break up big function signatures
+nnoremap gob  :s/\((\zs\\|,\ *\zs\\|)\)/\r&/g<CR><Bar>:'[,']normal ==<CR>
+
+" Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
+nmap <C-n> <Plug>NextWholeOccurrence
+xmap <C-n> <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+xmap g<C-n> <Plug>NextOccurrence
+nmap <C-x> <Plug>SkipOccurrence
+xmap <C-x> <Plug>SkipOccurrence
+nmap <C-p> <Plug>RemoveOccurrence
+xmap <C-p> <Plug>RemoveOccurrence
+
