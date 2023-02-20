@@ -3,20 +3,6 @@ set -e
 
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 # function names
-setup_neovim()
-{
-if [[ -d ~/.config/nvim ]]; then
-  rm -r ~/.config/nvim/
-fi
-if [[ -d ~/.nvim/ ]]; then
-    rm -r ~/.nvim/
-fi
-
-mkdir ~/.config/nvim/ -p
-mkdir ~/.nvim/undodir -p
-cp -r $scriptDir/neovim/autoload/ ~/.config/nvim/
-ln -s $scriptDir/neovim/init.vim ~/.config/nvim/init.vim
-}
 
 setup_tmux()
 {
@@ -24,14 +10,6 @@ if [[ -f ~/.tmux.conf ]]; then
 	rm ~/.tmux.conf
 fi
 ln -s $scriptDir/tmux/.tmux.conf  ~/.tmux.conf
-}
-
-setup_vscode()
-{
-rm ~/.config/Code/User/settings.json ~/.config/Code/User/keybindings.json
-mkdir ~/.config/Code/User/ 
-ln -s $scriptDir/vscode/settings.json ~/.config/Code/User/settings.json
-ln -s $scriptDir/vscode/keybindings.json ~/.config/Code/User/keybindings.json
 }
 
 setup_aliases()
@@ -53,18 +31,14 @@ if [[ -f ~/.zshrc ]]; then
     echo "# add my aliases" >> ~/.zshrc
     echo "source $HOME/.aliases" >> ~/.zshrc
 fi
-}
 
-setup_npm()
-{
-mkdir ~/.npm-global
-npm config set prefix '~/.npm-global'
-if [[ -f ~/.profile ]]; then
-    echo "" >> ~/.profile
-    echo "# add npm prefix" >> ~/.profile
-    echo "\"export PATH=~/.npm-global/bin:\$PATH\"" >> ~/.profile
+if [[ -f ~/.config/fish.config ]]; then
+    echo "" >> ~/.config/fish/config.fish
+    echo "# add my aliases" >> ~/.config/fish/config.fish
+    echo "source $HOME/.aliases" >> ~/.config/fish/config.fish
 fi
 }
+
 setup_ideavimrc()
 {
 rm ~/.ideavimrc
@@ -81,7 +55,6 @@ list_options()
     echo "all"
     echo "aliases"
     echo "tmux"
-    echo "vscode"
     echo "ideavimrc"
 }
 
@@ -108,12 +81,6 @@ elif [ "$var" == "aliases" ]; then
     setup_aliases
 elif [ "$var" == "tmux" ]; then
     setup_tmux
-elif [ "$var" == "npm" ]; then
-    setup_npm
-elif [ "$var" == "neovim" ]; then
-    setup_neovim
-elif [ "$var" == "vscode" ]; then
-    setup_vscode
 elif [ "$var" == "ideavimrc" ]; then
     setup_ideavimrc
 else
