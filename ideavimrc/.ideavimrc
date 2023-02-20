@@ -9,36 +9,44 @@ set smartcase
 set showmatch
 set ideajoin
 set NERDTree
-set multiple-cursors
+set highlightedyank
+" set multiple-cursors
 idearefactormode=keep
 
 " Integrate with system clipboard
 set clipboard=unnamedplus,unnamed
 
 let mapleader = " "
-set easymotion
+" set easymotion
 
 set timeoutlen=1000
 
+nmap g] :action GotoImplementation<cr>
 " key bindings for quickly moving between windows
 " h left, l right, k up, j down
-nmap <leader>wh <c-w>h
-nmap <leader>wl <c-w>l
-nmap <leader>wk <c-w>k
-nmap <leader>wj <c-w>j
-nmap <leader>wq :wq<cr>
+nmap <c-h> <c-w>h
+nmap <c-l> <c-w>l
+nmap <c-k> <c-w>k
+nmap <c-j> <c-w>j
+nnoremap <c-u> <c-u>zz
+nnoremap <c-d> <c-d>zz
 
 nmap gd :action GotoDeclaration<cr>
+" fix jumplist
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
 
 nmap <leader>e :action NERDTreeToggle<cr>
-nmap <leader>f :action GotoFile<cr>
-nmap <leader>st :action FindInPath<cr>
+nmap <leader>ff :action GotoFile<cr>
+nmap <leader>fb :action RecentFiles<cr>
+nmap <leader>fw :action FindInPath<cr>
 nmap <leader>ns :action GotoSymbol<cr>
-nmap <leader>nm :action FileStructurePopup<cr>
 nmap <leader>d :action ShowErrorDescription<cr>
 nmap <leader>o :action FileStructurePopup<cr>
-nmap <leader>lpd :action QuickImplementations<cr>
 nmap <leader>h :noh<cr>
+nmap <leader>/ :action CommentByLineComment<cr>
+nmap <leader>q :action CloseContent<cr>
+
 
 nmap == :action ReformatCode<cr>
 " Debugger
@@ -51,18 +59,32 @@ nmap <leader>du :action StepOut<cr>
 nmap <leader>du :action StepOut<cr>
 nmap <leader>dg :action ChooseRunConfiguration<CR>
 
-nmap <leader>Lr :action IdeaVim.ReloadVimRc.reload<CR>
+" git
+nmap <leader>gb :action Git.Branches<cr>
+nmap <leader>gd :action Diff.ShowDiff<cr>
+nmap <leader>gj :action VcsShowNextChangeMarker<cr>
+nmap <leader>gk :action VcsShowPrevChangeMarker<cr>
+nmap <leader>gl :action Annotate<cr>
+nmap <leader>gr :action Vcs.RollbackChangedLines<CR>
+nmap <leader>gR :action ChangesView.Revert<CR>
 
-nmap <m-j> 15gj
-nmap <m-k> 15gk
+" LSP options
+nmap <leader>la :action ShowIntentionActions<cr>
+nmap <leader>ld :action InspectCode<cr>
+nmap <leader>lf :action ReformatCode<cr>
+nmap <leader>lj :action GotoNextError<cr>
+nmap <leader>lk :action GotoPreviousError<cr>
+nmap <leader>lw :action ActivateProblemsViewToolWindow<cr>
+nmap <leader>lr :action RenameElement<CR>
+nmap <leader>lp :action QuickImplementations<cr>
+
+
+nmap <leader>Lr :action IdeaVim.ReloadVimRc.reload<CR>
 
 " Search defaults
 nnoremap / /\v
 vnoremap / /\v
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
-
-" Quickly get out of insert mode
-imap jk <ESC>
 
 " Won't work in visual mode (with vmap) for some reason.
 " Use default map of <c-/> for that.
@@ -72,12 +94,34 @@ imap jk <ESC>
 nnoremap gob  :s/\((\zs\\|,\ *\zs\\|)\)/\r&/g<CR><Bar>:'[,']normal ==<CR>
 
 " Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
-nmap <C-n> <Plug>NextWholeOccurrence
-xmap <C-n> <Plug>NextWholeOccurrence
-nmap g<C-n> <Plug>NextOccurrence
-xmap g<C-n> <Plug>NextOccurrence
-nmap <C-x> <Plug>SkipOccurrence
-xmap <C-x> <Plug>SkipOccurrence
-nmap <C-p> <Plug>RemoveOccurrence
-xmap <C-p> <Plug>RemoveOccurrence
+" nmap <C-n> <Plug>NextWholeOccurrence
+" xmap <C-n> <Plug>NextWholeOccurrence
+" nmap g<C-n> <Plug>NextOccurrence
+" xmap g<C-n> <Plug>NextOccurrence
+" nmap <C-x> <Plug>SkipOccurrence
+" xmap <C-x> <Plug>SkipOccurrence
+" nmap <C-p> <Plug>RemoveOccurrence
+" xmap <C-p> <Plug>RemoveOccurrence
 
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+nnoremap Y yg$
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+
+" greatest remap ever
+nnoremap <leader>p \"+p
+
+" next greatest remap ever : asbjornHaland
+nnoremap <leader>y \"+y
+vnoremap <leader>y \"+y
+nmap <leader>Y \"+Y
+
+nnoremap <leader>d \"_d
+vnoremap <leader>d \"_d
+
+vnoremap <leader>d \"_d
+
+nnoremap <leader>r :%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>
