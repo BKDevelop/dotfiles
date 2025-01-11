@@ -31,6 +31,19 @@ nmap <c-j> <c-w>j
 nnoremap <c-u> <c-u>zz
 nnoremap <c-d> <c-d>zz
 
+" move lines
+nmap <A-j> :m .+1<CR>==
+nmap <A-k> :m .-2<CR>==
+
+imap <A-j> <Esc>:m .+2<CR>==gi
+imap <A-k> <Esc>:m .-2<CR>==gi
+
+vmap <A-j> :m '>+1<CR>gv=gv
+vmap <A-k> :m '>-2<CR>gv=gv
+
+cmap <A-j> :m '>+1<CR>gv-gv
+cmap <A-k> :m '>-2<CR>gv-gv
+
 nmap gd :action GotoDeclaration<cr>
 " fix jumplist
 nmap <C-o> <Action>(Back)
@@ -38,8 +51,11 @@ nmap <C-i> <Action>(Forward)
 
 nmap <leader>e :action NERDTreeToggle<cr>
 nmap <leader>ff :action GotoFile<cr>
+vmap <leader>ff :action GotoFile<cr>
 nmap <leader>fb :action RecentFiles<cr>
+vmap <leader>fb :action RecentFiles<cr>
 nmap <leader>fw :action FindInPath<cr>
+vmap <leader>fw :action FindInPath<cr>
 nmap <leader>ns :action GotoSymbol<cr>
 nmap <leader>d :action ShowErrorDescription<cr>
 nmap <leader>o :action FileStructurePopup<cr>
@@ -48,14 +64,12 @@ nmap <leader>/ :action CommentByLineComment<cr>
 nmap <leader>q :action CloseContent<cr>
 
 
-nmap == :action ReformatCode<cr>
 " Debugger
 nmap <leader>dt :action ToggleLineBreakpoint<cr>
-nmap <leader>dc :action Resume<cr>
-nmap <leader>dC :action RunToCursor<cr>
+nmap <leader>dC :action Resume<cr>
+nmap <leader>dc :action RunToCursor<cr>
 nmap <leader>do :action StepOver<cr>
 nmap <leader>di :action StepInto<cr>
-nmap <leader>du :action StepOut<cr>
 nmap <leader>du :action StepOut<cr>
 nmap <leader>dg :action ChooseRunConfiguration<CR>
 
@@ -125,3 +139,5 @@ vnoremap <leader>d \"_d
 vnoremap <leader>d \"_d
 
 nnoremap <leader>r :%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>
+
+inoremap <C-y> :action EditorChooseLookupItemReplace<cr>
